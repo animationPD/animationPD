@@ -1,0 +1,31 @@
+- hosts: web_nodes
+  tasks:
+    - name: " Install common dep"
+      yum:
+        name: "{{ item }}"
+        state: present
+      become: yes
+      with_items:
+        - "git"
+        - "mc"
+    - name: "install python env"
+      yum:
+       name: "{{ item }}"
+       state: present
+      become: yes
+      with_items:
+        - "python36"
+        - "python36-pip"
+    - name: "Sync repo"
+      git:
+        repo: https://github.com/jkanclerz/animation-creator.git
+        dest: ~/animation-creator
+    - name: "instal python dependencies"
+      pip: 
+        name: "{{ item }}" 
+        executable: pip-3.6
+      become: yes
+      with_items: 
+        - "boto3"
+        - "pytest"
+        - "flask"

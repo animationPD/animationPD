@@ -1,0 +1,20 @@
+-hosts: web_nodes
+ tasks:
+   - name: " Install common dep"
+     yum:
+       name: "{{ item }}"
+       state: present
+     become: yes
+     with_items:
+       - "git"
+       - "mc"
+   - name: "install python env"
+     yum:
+      name: "{{ item }}"
+      state: present
+    become: yes
+    with_items:
+      - "python36"
+      - "python36-pip"
+
+
